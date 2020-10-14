@@ -1,4 +1,5 @@
 import 'package:farmer_market/views/screens/Edit_product.dart';
+import 'package:farmer_market/views/screens/customer.dart';
 import 'package:farmer_market/views/screens/home.dart';
 import 'package:farmer_market/views/screens/login.dart';
 import 'package:farmer_market/views/screens/signUp.dart';
@@ -31,6 +32,12 @@ abstract class Routes {
               builder: (context) => EditProduct(
                     productId: routeArray[2],
                   ));
+        } else if (settings.name.contains('/customer/')) {
+          print(routeArray[2]);
+          return MaterialPageRoute(
+              builder: (context) => Customer(
+                    marketId: routeArray[2],
+                  ));
         }
         return MaterialPageRoute(builder: (context) => Home());
     }
@@ -59,6 +66,12 @@ abstract class Routes {
           return CupertinoPageRoute(
               builder: (context) => EditProduct(
                     productId: routeArray[2],
+                  ));
+        } else if (settings.name.contains('/customer/')) {
+          print(routeArray[2]);
+          return CupertinoPageRoute(
+              builder: (context) => Customer(
+                    marketId: routeArray[2],
                   ));
         }
         return CupertinoPageRoute(builder: (context) => Home());

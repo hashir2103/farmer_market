@@ -18,6 +18,14 @@ abstract class TextStyles {
           fontSize: 30.0,
           fontWeight: FontWeight.bold));
   }
+  
+  static TextStyle get listTitle {
+    return GoogleFonts.economica(
+        textStyle: TextStyle(
+          color: AppColor.straw,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold));
+  }
   static TextStyle get navTitle {
     return GoogleFonts.poppins(
         textStyle:

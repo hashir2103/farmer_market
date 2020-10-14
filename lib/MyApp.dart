@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:farmer_market/blocs/auth_bloc.dart';
+import 'package:farmer_market/blocs/customer_bloc.dart';
 import 'package:farmer_market/blocs/product_bloc.dart';
 import 'package:farmer_market/services/firestore_service.dart';
 import 'package:farmer_market/services/routes.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 final authBloc = AuthBloc();
+final customerBloc = CustomerBloc();
 final productBloc = ProductBloc();
 final firestoreService = FirestoreService();
 
@@ -24,20 +26,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
+    return MultiProvider(providers: [
       Provider(create: (context) => authBloc),
       Provider(create: (context) => productBloc),
+      Provider(create: (context) => customerBloc),
       FutureProvider(create: (context) => authBloc.isLoggedIn()),
-      StreamProvider(create: (context) => firestoreService.fetchUnitTypes(),)
-      ], 
-      child: PlatformApp());
+      StreamProvider(
+        create: (context) => firestoreService.fetchUnitTypes(),
+      )
+    ], child: PlatformApp());
   }
 
   @override
   void dispose() {
     authBloc.dispose();
     productBloc.dispose();
+    customerBloc.dispose();
     super.dispose();
   }
 }
@@ -52,16 +56,16 @@ class PlatformApp extends StatelessWidget {
         // builder: DevicePreview.appBuilder,
         home: (isloggedIn == null)
             ? (Platform.isIOS)
-              ? CupertinoPageScaffold(
-                  child: Center(
-                    child: CupertinoActivityIndicator(),
-                  ),
-                )
-              : Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                ? CupertinoPageScaffold(
+                    child: Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  )
+                : Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
             : (isloggedIn == true) ? Home() : Login(),
         onGenerateRoute: Routes.cupertinoPageRoute,
         theme: CupertinoThemeData(
@@ -76,16 +80,16 @@ class PlatformApp extends StatelessWidget {
         // builder: DevicePreview.appBuilder,
         home: (isloggedIn == null)
             ? (Platform.isIOS)
-              ? CupertinoPageScaffold(
-                  child: Center(
-                    child: CupertinoActivityIndicator(),
-                  ),
-                )
-              : Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                ? CupertinoPageScaffold(
+                    child: Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  )
+                : Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
             : (isloggedIn == true) ? Home() : Login(),
         onGenerateRoute: Routes.materialPageRoute,
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),

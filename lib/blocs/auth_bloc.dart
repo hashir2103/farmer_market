@@ -13,6 +13,7 @@ class AuthBloc {
   final _password = BehaviorSubject<String>();
   final _errorMessage = BehaviorSubject<String>();
   final _user = BehaviorSubject<MyUser>();
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirestoreService _service = FirestoreService();
 
